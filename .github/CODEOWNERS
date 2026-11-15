@@ -1,0 +1,5 @@
+# Changes to the checks, workflows and docs need a maintainer's review.
+# (Entries under plugins/ are reviewed by a maintainer before merging too.)
+*                @sn
+/tools/          @sn
+/.github/        @sn

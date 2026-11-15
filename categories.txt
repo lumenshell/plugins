@@ -1,0 +1,15 @@
+# Categories a plugin can list in `categories`. Ask in a pull request to add one.
+ai
+cloud
+containers
+editing
+files
+fun
+git
+languages
+monitoring
+navigation
+notes
+productivity
+ssh
+other

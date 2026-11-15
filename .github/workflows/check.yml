@@ -1,0 +1,43 @@
+# Checks a pull request: the entries it changes (format, who may change
+# them, published versions left alone), then each new version's code with
+# `lumen plugins check` from the newest Lumen release. A maintainer still
+# reviews and merges: merging is publishing.
+#
+# `pull_request_target` runs this file and tools/ as they are on main, so a
+# pull request can't change the checks it's checked by. The pull request's
+# files are only read as data (git show); none of its code runs here.
+name: Check
+on: pull_request_target
+permissions:
+  contents: read
+jobs:
+  entries:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Fetch the pull request (as data)
+        env:
+          PR: ${{ github.event.pull_request.number }}
+        run: git fetch --no-tags origin "pull/$PR/head:pr-head"
+      - name: Check the changed entries
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: python3 tools/registry.py check-pr "$BASE" pr-head "$AUTHOR"
+      - name: Get Lumen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The libraries Lumen's binary links, though `plugins check` opens no window.
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libxkbcommon0 libxkbcommon-x11-0 libxcb1
+          gh release download -R lumenshell/lumen -p 'lumen-linux-x86_64.tar.gz'
+          tar -xzf lumen-linux-x86_64.tar.gz
+          ./lumen-linux-x86_64/bin/lumen --version
+      - name: Check each new version's code
+        run: python3 tools/registry.py check-code ./lumen-linux-x86_64/bin/lumen

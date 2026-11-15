@@ -1,0 +1,36 @@
+# Publishes index.json, the list Lumen reads, to GitHub Pages:
+# https://lumenshell.github.io/plugins/index.json
+name: Publish
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *" # daily, so stars stay current
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build the index
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir site
+          python3 tools/registry.py build-index site/index.json
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
