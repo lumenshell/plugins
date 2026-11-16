@@ -1,0 +1,11 @@
+repo = "https://github.com/sn/lumen-build-status"
+path = ""
+description = "Show how the last build or test went in the tab title, like ✓ cargo test · 12s"
+license = "MIT"
+categories = ["monitoring", "productivity"]
+
+[[versions]]
+version = "1.0.0"
+commit = "d93772a43993cb2c133b52b0a5735ab4a8e49d02"
+permissions = ["screen", "panes"]
+lumen = "1.2.0"

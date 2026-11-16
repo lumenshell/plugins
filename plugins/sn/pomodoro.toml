@@ -1,0 +1,11 @@
+repo = "https://github.com/sn/lumen-pomodoro"
+path = ""
+description = "A pomodoro timer in a pane of its own, with the countdown on its tab"
+license = "MIT"
+categories = ["productivity"]
+
+[[versions]]
+version = "1.0.0"
+commit = "a6ad5c3ccf8c4bfb3043fd2198bf948acf659a28"
+permissions = ["panes"]
+lumen = "1.2.0"
