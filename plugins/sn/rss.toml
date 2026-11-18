@@ -1,11 +1,17 @@
 repo = "https://github.com/sn/lumen-rss"
 path = ""
-description = "Read your RSS and Atom feeds in a tab of their own, with the unread count on the tab"
+description = "Read your RSS and Atom feeds in a tab of their own or a panel beside your work, with the unread count"
 license = "MIT"
 categories = ["productivity"]
 
 [[versions]]
 version = "1.0.0"
 commit = "c59708ba1a65d36fb040b134ce7c810eb7eb6a8d"
+permissions = ["panes"]
+lumen = "1.2.0"
+
+[[versions]]
+version = "1.1.0"
+commit = "0a6426c2ebd64ee54dd6b221f540e43af578f114"
 permissions = ["panes"]
 lumen = "1.2.0"
