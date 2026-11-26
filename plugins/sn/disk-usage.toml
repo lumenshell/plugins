@@ -1,0 +1,11 @@
+repo = "https://github.com/sn/lumen-disk-usage"
+path = ""
+description = "See how full your drives are and what's using the space: Docker, Rust builds, AI models, node_modules and caches, each with its path"
+license = "MIT"
+categories = ["monitoring"]
+
+[[versions]]
+version = "1.0.0"
+commit = "1c8009348ad8c114bd685d0546bacddcfd853c6b"
+permissions = ["panes"]
+lumen = "1.2.0"
